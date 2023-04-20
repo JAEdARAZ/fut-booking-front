@@ -7,7 +7,7 @@ interface NavBarDrawerProps {
   onClick: () => void
 }
 
-export default function NavBarDrawer({ onClick, navItems }: NavBarDrawerProps) {
+export default function NavBarDrawer ({ onClick, navItems }: NavBarDrawerProps) {
   return (
     <>
       <Box sx={{ width: 250 }}>

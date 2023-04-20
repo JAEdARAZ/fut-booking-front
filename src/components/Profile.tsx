@@ -1,8 +1,23 @@
-import { Container, Typography, Paper, Button } from "@mui/material";
-import profileImage from "../assets/me.jpg";
+import { Button, Container, Paper, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { useEffect, useState } from "react";
+import profileImage from "../assets/me.jpg";
+import { User, getUsers as getApiUsers } from "../services/api";
 
 export default function Profile() {
+  const initalUser: User = { id: "", name: "", email: "" }
+  const [user, setUser] = useState<User>(initalUser);
+
+  useEffect(() => {
+    async function getUser() {
+      const users = await getApiUsers();
+      const user = users[0];
+      setUser(user);
+    }
+    
+    getUser();
+  }, []);
+
   return (
     <Container>
       <Typography
@@ -19,13 +34,12 @@ export default function Profile() {
         </Grid2>
         <Grid2 xs={9} xl={9} sx={{ height: "inherit", maxHeight: "inherit", backgroundColor: "white" }}>
           <Paper elevation={2} sx={{ paddingY: 3 }}>
-            <Typography variant="h4" component="h3" marginBottom={2} paddingLeft={4}>Name: Jhon Doe</Typography>
-            <Typography variant="h4" component="h3" marginBottom={2} paddingLeft={4}>Position: Midfielder</Typography>
-            <Typography variant="h4" component="h3" marginBottom={2} paddingLeft={4}>Date of birth: 10/10/2010</Typography>
+            <Typography variant="h4" component="h3" marginBottom={2} paddingLeft={4}>UserId: {user.id}</Typography>
+            <Typography variant="h4" component="h3" marginBottom={2} paddingLeft={4}>Name: {user.name}</Typography>
+            <Typography variant="h4" component="h3" marginBottom={2} paddingLeft={4}>Email: {user.email}</Typography>
           </Paper>
         </Grid2>
       </Grid2>
-      <Typography variant="h1" component="h1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas corporis pariatur quibusdam totam ab qui aliquid neque quo placeat esse! Ea amet eligendi quaerat officiis sequi mollitia, libero odit autem. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas corporis pariatur quibusdam totam ab qui aliquid neque quo placeat esse! Ea amet eligendi quaerat officiis sequi mollitia, libero odit autem.</Typography>
     </Container>
   );
 }
