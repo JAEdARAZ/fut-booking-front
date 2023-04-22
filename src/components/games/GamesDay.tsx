@@ -1,28 +1,21 @@
-import { ReactElement, useEffect, useState } from "react";
-import { Game, GamesByDay, getGames } from "../../services/api";
+import { Stack, Typography } from "@mui/material";
+import { ReactElement } from "react";
+import { Game, GamesByDay } from "../../services/api";
 import GameCard from "./GameCard";
-import { Stack } from "@mui/material";
 
-export default function GamesDay() {
-  const [gamesByDay, setGamesByDay] = useState<GamesByDay>({ date: "", games: [] });
+interface GamesDayProps {
+  gamesByDay: GamesByDay
+}
 
-  useEffect(() => {
-    async function getApiGames() {
-      const games = await getGames();
-      setGamesByDay(gamesByDay);
-    }
-
-    getApiGames();
-  }, []);
-
-  const renderStacks = (games: Game[]) => {
-    const stacks: ReactElement[] = [];
+export default function GamesDay({ gamesByDay }: GamesDayProps) {
+  const renderGames = (games: Game[]) => {
+    const gameCards: ReactElement[] = [];
     for (let i = 0; i < games.length; i = i + 3) {
       const firstGameCard = <GameCard game={games[i]} />;
       const secondGameCard = (i + 1 < games.length) ? <GameCard game={games[i + 1]} /> : <></>;
       const thirdGameCard = (i + 2 < games.length) ? <GameCard game={games[i + 2]} /> : <></>;
 
-      stacks.push(
+      gameCards.push(
         <Stack
           direction={{ sm: 'column', md: 'row' }}
           spacing={2}
@@ -36,6 +29,18 @@ export default function GamesDay() {
       )
     }
 
-    return stacks;
+    return gameCards;
   }
+
+  return (
+    <Stack
+      direction="column"
+      spacing={2}
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Typography>{gamesByDay.date}</Typography>
+      {renderGames(gamesByDay.games)}
+    </Stack>
+  )
 }
