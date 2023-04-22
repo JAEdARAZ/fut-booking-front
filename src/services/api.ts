@@ -15,6 +15,11 @@ export interface Game {
   photoUrl: string
 }
 
+export interface GamesByDay {
+  date: string,
+  games: Game[]
+}
+
 export async function getUsers(): Promise<User[]> {
   try {
     const users: AxiosResponse<User[]> = await axios.get(`${baseUrl}/users`);

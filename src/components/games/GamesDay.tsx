@@ -1,15 +1,15 @@
-import Stack from "@mui/material/Stack";
 import { ReactElement, useEffect, useState } from "react";
-import { Game, getGames } from "../services/api";
+import { Game, GamesByDay, getGames } from "../../services/api";
 import GameCard from "./GameCard";
+import { Stack } from "@mui/material";
 
-export default function Home() {
-  const [games, setGames] = useState<Game[]>([]);
+export default function GamesDay() {
+  const [gamesByDay, setGamesByDay] = useState<GamesByDay>({ date: "", games: [] });
 
   useEffect(() => {
     async function getApiGames() {
       const games = await getGames();
-      setGames(games);
+      setGamesByDay(gamesByDay);
     }
 
     getApiGames();
@@ -38,17 +38,4 @@ export default function Home() {
 
     return stacks;
   }
-
-  return (
-    <>
-      <Stack
-        direction="column"
-        spacing={4}
-        alignItems="center"
-        justifyContent="center"
-      >
-        {renderStacks(games)}
-      </Stack>
-    </>
-  )
 }

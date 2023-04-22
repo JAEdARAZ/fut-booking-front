@@ -1,9 +1,9 @@
 
-import { Container } from "@mui/system";
 import "./App.css";
+import { Container } from "@mui/system";
 import NavBar from "./components/navbar/NavBar";
 import { Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
+import Games from "./components/games/Games";
 import Profile from "./components/Profile";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <NavBar />
       <Container>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Games />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </Container>

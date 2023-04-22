@@ -24,5 +24,17 @@ export const games: Game[] = [
     location: "Javea fotballbane",
     playersNumber: 16,
     photoUrl: "https://golsmedia.com/wp-content/uploads/2021/07/cd_javea.jpg"
+  },
+  {
+    date: "21/04",
+    location: "Fedje fotballbane",
+    playersNumber: 14,
+    photoUrl: "https://www.nordicstadiums.com/wp-content/uploads/2022/09/Fedje-Idrettsplass-Fedje-IL-a.jpg"
+  },
+  {
+    date: "21/04",
+    location: "Javea fotballbane",
+    playersNumber: 16,
+    photoUrl: "https://golsmedia.com/wp-content/uploads/2021/07/cd_javea.jpg"
   }
 ]

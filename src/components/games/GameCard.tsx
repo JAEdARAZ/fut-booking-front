@@ -2,7 +2,7 @@ import StadiumIcon from '@mui/icons-material/Stadium';
 import GroupsIcon from '@mui/icons-material/Groups';
 import EventIcon from '@mui/icons-material/Event';
 import { Button, Card, CardActions, CardContent, CardMedia, Stack, Typography } from "@mui/material";
-import { Game } from '../services/api';
+import { Game } from '../../services/api';
 
 interface GameCardProps {
   game: Game
