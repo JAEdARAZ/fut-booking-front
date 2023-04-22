@@ -1,4 +1,5 @@
-import { Game, GamesByDay, getGames } from "./api";
+import { Game, GamesByDay } from "../types/types";
+import { getGames } from "./api";
 
 export async function getGamesByDay(): Promise<GamesByDay[]> {
   const games = await getGames();

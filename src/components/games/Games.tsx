@@ -1,8 +1,8 @@
 import Stack from "@mui/material/Stack";
 import { useEffect, useState } from "react";
-import { GamesByDay } from "../../services/api";
-import { getGamesByDay } from "../../services/service";
+import { getGamesByDay } from "../../services/gamesService";
 import GamesDay from "./GamesDay";
+import { GamesByDay } from "../../types/types";
 
 export default function Games() {
   const [gamesByDayList, setGamesByDayList] = useState<GamesByDay[]>([]);

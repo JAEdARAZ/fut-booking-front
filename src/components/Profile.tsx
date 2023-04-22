@@ -2,7 +2,8 @@ import { Button, Container, Paper, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useEffect, useState } from "react";
 import profileImage from "../assets/me.jpg";
-import { User, getUsers as getApiUsers } from "../services/api";
+import { getUsers as getApiUsers } from "../services/api";
+import { User } from "../types/types";
 
 export default function Profile() {
   const initalUser: User = { id: "", name: "", email: "" }

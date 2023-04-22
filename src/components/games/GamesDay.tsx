@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import { ReactElement } from "react";
-import { Game, GamesByDay } from "../../services/api";
 import GameCard from "./GameCard";
+import { Game, GamesByDay } from "../../types/types";
 
 interface GamesDayProps {
   gamesByDay: GamesByDay

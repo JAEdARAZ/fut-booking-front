@@ -2,7 +2,7 @@ import StadiumIcon from '@mui/icons-material/Stadium';
 import GroupsIcon from '@mui/icons-material/Groups';
 import EventIcon from '@mui/icons-material/Event';
 import { Button, Card, CardActions, CardContent, CardMedia, Stack, Typography } from "@mui/material";
-import { Game } from '../../services/api';
+import { Game } from '../../types/types';
 
 interface GameCardProps {
   game: Game
@@ -39,7 +39,7 @@ export default function GameCard({ game }: GameCardProps) {
           spacing={2}
         >
           <EventIcon />
-          <Typography>{game.date}</Typography>
+          <Typography sx={{ fontWeight: 'bold' }}>{`${game.time} (${game.date})`}</Typography>
         </Stack>
       </CardContent>
       <CardActions>
