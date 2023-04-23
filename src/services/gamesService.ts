@@ -1,4 +1,5 @@
 import { Game, GamesByDay } from "../types/types";
+import { getNorwayTodayAndTomorrow } from "../utils/dates";
 import { getGames } from "./api";
 
 export async function getGamesByDay(): Promise<GamesByDay[]> {
@@ -18,4 +19,15 @@ export async function getGamesByDay(): Promise<GamesByDay[]> {
   }
 
   return gamesByDay;
+}
+
+export function getGameDateText(date: string): string {
+  const norwayTodayAndTomorrow = getNorwayTodayAndTomorrow();
+  if (date === norwayTodayAndTomorrow.today) {
+    return `TODAY - ${date}`;
+  } else if (date === norwayTodayAndTomorrow.tomorrow) {
+    return `TOMORROW - ${date}`;
+  } else {
+    return date;
+  }
 }

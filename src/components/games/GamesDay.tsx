@@ -1,7 +1,8 @@
 import { Stack, Typography } from "@mui/material";
 import { ReactElement } from "react";
-import GameCard from "./GameCard";
 import { Game, GamesByDay } from "../../types/types";
+import GameCard from "./GameCard";
+import { getGameDateText } from "../../services/gamesService";
 
 interface GamesDayProps {
   gamesByDay: GamesByDay
@@ -39,7 +40,7 @@ export default function GamesDay({ gamesByDay }: GamesDayProps) {
       alignItems="center"
       justifyContent="center"
     >
-      <Typography>{gamesByDay.date}</Typography>
+      <Typography variant="h6" component="h2">{getGameDateText(gamesByDay.date)}</Typography>
       {renderGames(gamesByDay.games)}
     </Stack>
   )
