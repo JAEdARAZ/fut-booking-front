@@ -20,13 +20,13 @@ export default function Games() {
     <Stack
       direction="column"
       spacing={6}
-      marginBottom={10}
+      marginBottom={8}
       alignItems="center"
       justifyContent="center"
     >
       {
         gamesByDayList.map((gamesByDay) => (
-          <GamesDay gamesByDay={gamesByDay} />
+          <GamesDay gamesByDay={gamesByDay} key={gamesByDay.date}/>
         ))
       }
     </Stack>

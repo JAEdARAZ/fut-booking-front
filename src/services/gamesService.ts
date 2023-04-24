@@ -29,9 +29,9 @@ export async function getGamesByDay(): Promise<GamesByDay[]> {
 export function getGameDateText(date: string): string {
   const norwayTodayAndTomorrow = getNorwayTodayAndTomorrow();
   if (date === norwayTodayAndTomorrow.today) {
-    return `TODAY - ${date}`;
+    return `TODAY (${date})`;
   } else if (date === norwayTodayAndTomorrow.tomorrow) {
-    return `TOMORROW - ${date}`;
+    return `TOMORROW (${date})`;
   } else {
     return date;
   }
