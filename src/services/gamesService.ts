@@ -2,6 +2,11 @@ import { Game, GamesByDay } from "../types/types";
 import { getNorwayTodayAndTomorrow } from "../utils/dates";
 import { getGames } from "./api";
 
+export async function getGame() {
+  const games = await getGames();
+  return games[Math.floor(Math.random() * games.length)];
+}
+
 export async function getGamesByDay(): Promise<GamesByDay[]> {
   const games = await getGames();
   const gamesByDayObject: { [key: string]: Game[] } = {};

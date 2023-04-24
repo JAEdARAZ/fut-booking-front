@@ -5,6 +5,7 @@ export interface User {
 }
 
 export interface Game {
+  gameId: string,
   date: string,
   time: string,
   playersNumber: number,

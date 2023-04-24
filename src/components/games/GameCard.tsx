@@ -43,7 +43,13 @@ export default function GameCard({ game }: GameCardProps) {
         </Stack>
       </CardContent>
       <CardActions>
-        <Button variant="contained" sx={{ marginLeft: "auto", marginRight: 2 }}>BOOK</Button>
+        <Button 
+          variant="contained" 
+          sx={{ marginLeft: "auto", marginRight: 2 }}
+          href={`games/${game.gameId}`}
+        >
+          BOOK
+        </Button>
       </CardActions>
     </Card>
   )
