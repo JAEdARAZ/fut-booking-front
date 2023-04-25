@@ -33,7 +33,7 @@ export function GameDetail() {
       borderRadius="2%"
       borderColor="#1976d2"
     >
-      <Typography variant="h4">{game.location}</Typography>
+      <Typography variant="h4" sx={{ textTransform: "uppercase" }}>{game.location}</Typography>
       <Typography variant="h4">{`${game.time} - (${game.date})`}</Typography>
       <Box
         display="flex"
@@ -67,7 +67,7 @@ export function GameDetail() {
             spacing={3}
           >
             <StadiumIcon fontSize="large" />
-            <Typography variant="h5" sx={{ textTransform: "uppercase" }}>{game.location}</Typography>
+            <Typography variant="h5">{game.location}</Typography>
           </Stack>
           <Stack
             direction="row"
