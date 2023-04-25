@@ -8,8 +8,10 @@ export interface Game {
   gameId: string,
   date: string,
   time: string,
-  playersNumber: number,
+  playersTotal: number,
+  playersJoined: number,
   location: string,
+  locationGM: string,
   photoUrl: string
 }
 

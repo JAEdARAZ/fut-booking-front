@@ -1,8 +1,9 @@
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import EventIcon from '@mui/icons-material/Event';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import GroupsIcon from '@mui/icons-material/Groups';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StadiumIcon from '@mui/icons-material/Stadium';
-import { Box, Button, Stack, Typography } from "@mui/material";
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import { Box, Button, LinearProgress, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getGame as getApiGame } from "../../services/gamesService";
 import { Game } from "../../types/types";
@@ -10,7 +11,7 @@ import { Game } from "../../types/types";
 
 export function GameDetail() {
   //const { gameId } = useParams();
-  const initalGame: Game = { gameId: "", date: "", location: "", photoUrl: "", playersNumber: 0, time: "" }
+  const initalGame: Game = { gameId: "", date: "", location: "", locationGM: "", photoUrl: "", playersTotal: 0, playersJoined: 0, time: "" };
   const [game, setGame] = useState<Game>(initalGame);
 
   useEffect(() => {
@@ -52,12 +53,14 @@ export function GameDetail() {
           }}
           alt="Pitch"
           src={game.photoUrl}
+          pr={0.5}
         />
         <Box
           pb={0.5}
           display="flex"
           flexDirection="column"
           rowGap={0.5}
+          pl={0.5}
         >
           <Stack
             direction="row"
@@ -70,24 +73,31 @@ export function GameDetail() {
             direction="row"
             spacing={3}
           >
-            <GroupsIcon fontSize="large" />
-            <Typography variant="h5">{`${game.playersNumber / 2} vs ${game.playersNumber / 2}`}</Typography>
-          </Stack>
-          <Stack
-            direction="row"
-            spacing={3}
-          >
-            <EventIcon fontSize="large" />
+            <AccessTimeIcon fontSize="large" />
             <Typography variant="h5" sx={{ fontWeight: 'bold' }}>{`${game.time} (${game.date})`}</Typography>
           </Stack>
           <Stack
             direction="row"
-            flexGrow={1}
             spacing={3}
           >
             <GroupsIcon fontSize="large" />
-            <Typography variant="h5" sx={{ fontWeight: 'bold' }}>PLAYERS FOR THE GAME: 10/16</Typography>
+            <Typography variant="h5">{`${game.playersTotal / 2} vs ${game.playersTotal / 2}`}</Typography>
           </Stack>
+          <Stack
+            direction="row"
+            spacing={3}
+          >
+            <SportsSoccerIcon fontSize="large" />
+            <Typography variant="h5">Players for the game: {`${game.playersJoined}/${game.playersTotal}`}</Typography>
+          </Stack>
+          <Box flexGrow={1} width="100%" color="black">
+            <LinearProgress 
+              sx={{ height: "17px"}} 
+              color="inherit" 
+              variant="determinate" 
+              value={game.playersJoined/game.playersTotal * 100} 
+            />
+          </Box>
         </Box>
       </Box>
       <Box
@@ -102,6 +112,8 @@ export function GameDetail() {
           color="success"
           sx={{ width: "100%" }}
           startIcon={<LocationOnIcon />}
+          href={game.locationGM}
+          target="_blank"
         >
           LOCATION IN GOOGLE MAPS
         </Button>
