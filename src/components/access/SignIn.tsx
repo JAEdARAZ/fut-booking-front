@@ -21,7 +21,6 @@ export function SignIn() {
       sx={{ alignSelf: { xs: "inherit", md: "flex-start" } }}
       rowGap={2}
       p={2}
-      maxHeight="270px"
       border="1px solid"
       borderRadius="2%"
       borderColor="lightgrey"
@@ -41,7 +40,7 @@ export function SignIn() {
         variant="outlined"
         onChange={(e) => setPasswordLogin(e.target.value)}
       />
-      <Button type="submit" variant="contained">LOGIN</Button>
+      <Button sx={{ mt: 4 }} type="submit" variant="contained">LOGIN</Button>
     </Box>
   )
 }

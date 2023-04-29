@@ -1,25 +1,32 @@
 import { Box, Button, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { useState } from "react";
+import { registerNewUser } from "../../services/auth";
 
 export function Register() {
-  const [userRegister, setUserRegister] = useState<string>("");
-  const [passwordRegister, setPasswordRegister] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [firstname, setFirstname] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
   const [gender, setGender] = useState<string>("");
 
-  async function signUp(e: React.FormEvent<HTMLFormElement>) {
+  async function register(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log({
-      userRegister, passwordRegister, email, firstname, surname, gender
+    await registerNewUser({
+      username, 
+      password,
+      email,
+      name: firstname, 
+      surname: surname,
+      gender,
+      birthdate: "10/08/2000"
     });
   }
 
   return (
     <Box
       component="form"
-      onSubmit={(e) => signUp(e)}
+      onSubmit={(e) => register(e)}
       display="flex"
       flexDirection="column"
       alignItems="center"
@@ -34,7 +41,7 @@ export function Register() {
         id="user-signup"
         label="Username"
         variant="outlined"
-        onChange={(e) => setUserRegister(e.target.value)}
+        onChange={(e) => setUsername(e.target.value)}
       />
       <TextField
         sx={{ width: "300px", flexGrow: 1 }}
@@ -42,7 +49,7 @@ export function Register() {
         label="Password"
         type="password"
         variant="outlined"
-        onChange={(e) => setPasswordRegister(e.target.value)}
+        onChange={(e) => setPassword(e.target.value)}
       />
       <TextField
         sx={{ width: "300px" }}
