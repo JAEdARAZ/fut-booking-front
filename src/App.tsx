@@ -7,7 +7,7 @@ import { Footer } from "./components/Footer";
 // import { GameDetail } from "./components/games/GameDetail";
 // import Games from "./components/games/Games";
 import NavBar from "./components/navbar/NavBar";
-import { Login } from "./components/Login";
+import { Login } from "./components/access/Login";
 //import { Test } from "./components/Test";
 
 function App() {
