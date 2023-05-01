@@ -46,6 +46,24 @@ export async function registerNewUser(newUser: newUser) {
   }
 }
 
+export async function sendForgotPasswordCode(username: string) {
+  try {
+    await Auth.forgotPassword(username);
+    console.log("the code has been sent");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function submitNewPassword(username: string, newPassword: string, code: string) {
+  try {
+    await Auth.forgotPasswordSubmit(username, code, newPassword)
+    console.log("the new password has been set");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getAuthorizationHeader() {
   const response = await Auth.currentSession();
   const token = response.getAccessToken();

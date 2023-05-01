@@ -1,6 +1,6 @@
 import { Box, Divider, useMediaQuery, useTheme } from "@mui/material";
-import { SignIn } from "./SignIn";
 import { Register } from "./Register";
+import { SignIn } from "./SignIn";
 
 export function Login() {
   const theme = useTheme();
