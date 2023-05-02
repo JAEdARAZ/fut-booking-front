@@ -9,7 +9,7 @@ import { SendCode } from './SendCode';
 const steps = ['Send code', 'New password'];
 
 export default function ForgotPasswordStepper() {
-  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -32,15 +32,15 @@ export default function ForgotPasswordStepper() {
         (<Fragment>
           <SendCode
             moveStepperForward={() => handleNext()}
-            username={username}
-            setUsername={setUsername}
+            email={email}
+            setEmail={setEmail}
           />
         </Fragment>)
       }
       {
         activeStep === 1 &&
         (<Fragment>
-          <ForgotPassword username={username} />
+          <ForgotPassword email={email} />
         </Fragment>)
       }
     </Box>

@@ -2,15 +2,15 @@ import { Box, Button, TextField } from "@mui/material";
 import { sendForgotPasswordCode } from "../../services/auth";
 
 interface SendCodeProps {
-  username: string,
+  email: string,
   moveStepperForward: () => void,
-  setUsername: (username: string) => void
+  setEmail: (email: string) => void
 }
 
-export function SendCode({ username, moveStepperForward, setUsername }: SendCodeProps) {
+export function SendCode({ email, moveStepperForward, setEmail }: SendCodeProps) {
   async function fogotPasswordSendCode(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await sendForgotPasswordCode(username);
+    await sendForgotPasswordCode(email);
     moveStepperForward();
   }
 
@@ -34,10 +34,10 @@ export function SendCode({ username, moveStepperForward, setUsername }: SendCode
       >
         <TextField
           sx={{ width: "300px" }}
-          id="user-login"
-          label="Username"
+          id="email"
+          label="Email"
           variant="outlined"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <Button sx={{ mt: 4 }} type="submit" variant="contained">SEND CODE</Button>
       </Box>

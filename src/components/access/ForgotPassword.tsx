@@ -1,18 +1,21 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { submitNewPassword } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
 
 interface ForgotPasswordProps {
-  username: string
+  email: string
 }
 
-export function ForgotPassword({username}: ForgotPasswordProps) {
+export function ForgotPassword({email}: ForgotPasswordProps) {
+  const navigate = useNavigate();
   const [password, setPassword] = useState<string>("");
   const [forgotPasswordCode, setForgotPasswordCode] = useState<string>("");
 
   async function forgotPasswordSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await submitNewPassword(username, password, forgotPasswordCode);
+    await submitNewPassword(email, password, forgotPasswordCode);
+    navigate("/login");
   }
 
   return (
@@ -38,15 +41,15 @@ export function ForgotPassword({username}: ForgotPasswordProps) {
         <TextField
           sx={{ width: "300px" }}
           disabled
-          id="username"
-          label="Username"
+          id="email"
+          label="Email"
           variant="outlined"
-          defaultValue={username}
+          defaultValue={email}
         />
         <TextField
           sx={{ width: "300px" }}
           id="forgot-password-code"
-          label="Code (sent by email)"
+          label="Code"
           variant="outlined"
           onChange={(e) => setForgotPasswordCode(e.target.value)}
         />

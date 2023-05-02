@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <NavBar />
-      <Container>
+      <Container sx={{mb: "140px"}}>
         <Routes>
           <Route path="/" element={<Games />} />
           <Route path="/login" element={<Login />} />
