@@ -6,9 +6,9 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logoImage from "../../assets/logo.png";
 import NavBarDrawer from './NavBarDrawer';
 
 export default function NavBar() {
@@ -20,26 +20,30 @@ export default function NavBar() {
   ]
 
   return (
-    <Box marginBottom={4}>
+    <Box
+      marginBottom={4}
+    >
       <AppBar position="fixed">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={() => setOpen(true)}
-          >
-            <MenuIcon />
-          </IconButton>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Box width="60px">
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={() => setOpen(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
           <Box
             onClick={() => { navigate("/") }}
-            sx={{ flexGrow: 1, textAlign: "center" }}
+            width="300px"
+            height="50px"
           >
-            <Typography variant="h5" component="h2" sx={{ flexGrow: 1, textAlign: "center" }}>
-              Husball United FC
-            </Typography>
+            <img src={logoImage} alt="" className="img" />
           </Box>
+          <Box width="60px" />
         </Toolbar>
         <Drawer
           anchor="left"
