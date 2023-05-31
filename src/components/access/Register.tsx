@@ -4,7 +4,9 @@ import { registerNewUser } from "../../services/auth";
 
 export function Register() {
   const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [passwordState, setPasswordState] = useState<{ password: string, isValid: boolean, showHelperText: boolean }>(
+    { password: "", isValid: true, showHelperText: false }
+  );
   const [email, setEmail] = useState<string>("");
   const [firstname, setFirstname] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
@@ -12,15 +14,21 @@ export function Register() {
 
   async function register(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await registerNewUser({
-      username, 
-      password,
-      email,
-      name: firstname, 
-      surname: surname,
-      gender,
-      birthdate: "10/08/2000"
-    });
+    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\s])(?=.*\d)[A-Za-z\d^$.[\]{}()?"!@#%&/,><':;|_~`+=\\-]{8,}$/
+    if (regexPassword.test(passwordState.password)) {
+      setPasswordState({ ...passwordState, isValid: true })
+      await registerNewUser({
+        username,
+        password: passwordState.password,
+        email,
+        name: firstname,
+        surname: surname,
+        gender,
+        birthdate: "10/08/2000"
+      });
+    } else {
+      setPasswordState({ ...passwordState, isValid: false })
+    }
   }
 
   return (
@@ -49,7 +57,18 @@ export function Register() {
         label="Password"
         type="password"
         variant="outlined"
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => setPasswordState({ ...passwordState, password: e.target.value })}
+        onFocus={() => setPasswordState({ ...passwordState, showHelperText: true })}
+        error={!passwordState.isValid}
+        helperText={
+          passwordState.showHelperText &&
+          <>
+            - 8 characters length<br />
+            - One upper case letter<br />
+            - One number<br />
+            - One symbol<br />
+          </>
+        }
       />
       <TextField
         sx={{ width: "300px" }}
