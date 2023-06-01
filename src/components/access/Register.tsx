@@ -5,8 +5,9 @@ import { ErrorType } from "../../types/errors/ErrorType";
 import { Alert } from "../Alert";
 
 export function Register() {
-  const [showAlert, setShowAlert] = useState(false);
-  const [username, setUsername] = useState<string>("");
+  const [usernameState, setUsernameState] = useState<{ username: string, isValid: boolean }>(
+    { username: "", isValid: true }
+  );
   const [passwordState, setPasswordState] = useState<{ password: string, isValid: boolean, showHelperText: boolean }>(
     { password: "", isValid: true, showHelperText: false }
   );
@@ -15,6 +16,7 @@ export function Register() {
   const [surname, setSurname] = useState<string>("");
   const [gender, setGender] = useState<string>("");
 
+  const [showAlert, setShowAlert] = useState(false);
   const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') return;
     setShowAlert(false);
@@ -27,7 +29,7 @@ export function Register() {
       setPasswordState({ ...passwordState, isValid: true })
       try {
         await registerNewUser({
-          username,
+          username: usernameState.username,
           password: passwordState.password,
           email,
           name: firstname,
@@ -40,12 +42,14 @@ export function Register() {
         const code = error?.code;
         if (code === ErrorType.USERNAME_EXISTS.code) {
           console.log(ErrorType.USERNAME_EXISTS.message);
+          setUsernameState({ ...usernameState, isValid: false });
           setShowAlert(true);
         } else {
           console.log(error);
         }
       }
     } else {
+      setUsernameState({ ...usernameState, isValid: true });
       setPasswordState({ ...passwordState, isValid: false })
     }
   }
@@ -69,7 +73,8 @@ export function Register() {
         label="Username"
         variant="outlined"
         required
-        onChange={(e) => setUsername(e.target.value)}
+        onChange={(e) => setUsernameState({ ...usernameState, username: e.target.value })}
+        error={!usernameState.isValid}
       />
       <TextField
         sx={{ width: "300px", flexGrow: 1 }}
