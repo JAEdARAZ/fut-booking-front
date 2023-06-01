@@ -8,12 +8,13 @@ import { Login } from "./components/access/Login";
 import { GameDetail } from "./components/games/GameDetail";
 import Games from "./components/games/Games";
 import NavBar from "./components/navbar/NavBar";
+import { FOOTER_HEIGHT, Footer } from "./components/Footer";
 
 function App() {
   return (
     <>
       <NavBar />
-      <Container sx={{mb: "140px"}}>
+      <Container sx={{mb: "140px", minHeight: `calc(100vh - ${FOOTER_HEIGHT})`}}>
         <Routes>
           <Route path="/" element={<Games />} />
           <Route path="/login" element={<Login />} />
@@ -22,7 +23,7 @@ function App() {
           <Route path="/games/:gameId" element={<GameDetail />} />
         </Routes>
       </Container>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }

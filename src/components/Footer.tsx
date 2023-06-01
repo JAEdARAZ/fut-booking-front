@@ -1,17 +1,17 @@
 import { Box, Typography } from "@mui/material";
+export const FOOTER_HEIGHT = "100px";
 
 export function Footer() {
   return (
     <Box
-        display="flex"
-        position="fixed"
-        bottom={0}
-        justifyContent="center"
-        bgcolor="#23262A"
-        height="100px"
-        width="100%"
-      >
-        <Typography color="common.white">HEY THIS IS THE FOOTER</Typography>
-      </Box>
+      mt="auto"
+      display="flex"
+      justifyContent="center"
+      bgcolor="#23262A"
+      height={FOOTER_HEIGHT}
+      width="100%"
+    >
+      <Typography color="common.white">HEY THIS IS THE FOOTER</Typography>
+    </Box>
   );
 };
