@@ -1,8 +1,11 @@
-import { Box, Button, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
+import { Box, Button, FormControlLabel, Radio, RadioGroup, Snackbar, TextField } from "@mui/material";
 import { useState } from "react";
 import { registerNewUser } from "../../services/auth";
+import { ErrorType } from "../../types/errors/ErrorType";
+import { Alert } from "../Alert";
 
 export function Register() {
+  const [showAlert, setShowAlert] = useState(false);
   const [username, setUsername] = useState<string>("");
   const [passwordState, setPasswordState] = useState<{ password: string, isValid: boolean, showHelperText: boolean }>(
     { password: "", isValid: true, showHelperText: false }
@@ -12,20 +15,36 @@ export function Register() {
   const [surname, setSurname] = useState<string>("");
   const [gender, setGender] = useState<string>("");
 
+  const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') return;
+    setShowAlert(false);
+  };
+
   async function register(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\s])(?=.*\d)[A-Za-z\d^$.[\]{}()?"!@#%&/,><':;|_~`+=\\-]{8,}$/
     if (regexPassword.test(passwordState.password)) {
       setPasswordState({ ...passwordState, isValid: true })
-      await registerNewUser({
-        username,
-        password: passwordState.password,
-        email,
-        name: firstname,
-        surname: surname,
-        gender,
-        birthdate: "10/08/2000"
-      });
+      try {
+        await registerNewUser({
+          username,
+          password: passwordState.password,
+          email,
+          name: firstname,
+          surname: surname,
+          gender,
+          birthdate: "10/08/2000"
+        });
+        console.log("created user");
+      } catch (error: any) {
+        const code = error?.code;
+        if (code === ErrorType.USERNAME_EXISTS.code) {
+          console.log(ErrorType.USERNAME_EXISTS.message);
+          setShowAlert(true);
+        } else {
+          console.log(error);
+        }
+      }
     } else {
       setPasswordState({ ...passwordState, isValid: false })
     }
@@ -49,6 +68,7 @@ export function Register() {
         id="user-signup"
         label="Username"
         variant="outlined"
+        required
         onChange={(e) => setUsername(e.target.value)}
       />
       <TextField
@@ -57,6 +77,7 @@ export function Register() {
         label="Password"
         type="password"
         variant="outlined"
+        required
         onChange={(e) => setPasswordState({ ...passwordState, password: e.target.value })}
         onFocus={() => setPasswordState({ ...passwordState, showHelperText: true })}
         error={!passwordState.isValid}
@@ -75,6 +96,7 @@ export function Register() {
         id="email-signup"
         label="Email"
         variant="outlined"
+        required
         onChange={(e) => setEmail(e.target.value)}
       />
       <TextField
@@ -82,6 +104,7 @@ export function Register() {
         id="firstname-signup"
         label="First name"
         variant="outlined"
+        required
         onChange={(e) => setFirstname(e.target.value)}
       />
       <TextField
@@ -89,6 +112,7 @@ export function Register() {
         id="surname-signup"
         label="Surname"
         variant="outlined"
+        required
         onChange={(e) => setSurname(e.target.value)}
       />
       <RadioGroup
@@ -109,6 +133,21 @@ export function Register() {
       >
         REGISTER
       </Button>
+      <Snackbar
+        open={showAlert}
+        autoHideDuration={8000}
+        sx={{ height: "250px" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        onClose={handleCloseAlert}
+      >
+        <Alert
+          onClose={handleCloseAlert}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {ErrorType.USERNAME_EXISTS.message}
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }
