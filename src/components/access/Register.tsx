@@ -3,6 +3,7 @@ import { useState } from "react";
 import { registerNewUser } from "../../services/auth";
 import { ErrorType } from "../../types/errors/ErrorType";
 import { Alert } from "../Alert";
+import { allFieldsHaveValue } from "../../utils/utils";
 
 export function Register() {
   const [usernameState, setUsernameState] = useState<{ username: string, isValid: boolean }>(
@@ -26,6 +27,12 @@ export function Register() {
     e.preventDefault();
     setUsernameState({ ...usernameState, isValid: true });
     setPasswordState({ ...passwordState, isValid: true });
+    if (!allFieldsHaveValue([usernameState.username, passwordState.password, email, firstname, surname, gender])) {
+      setAlertMessage(ErrorType.INPUT_INCOMPLETE.message);
+      setShowAlert(true);
+      return;
+    }
+
     try {
       await registerNewUser({
         username: usernameState.username,
@@ -78,7 +85,6 @@ export function Register() {
         id="user-signup"
         label="Username"
         variant="outlined"
-        required
         onChange={(e) => setUsernameState({ ...usernameState, username: e.target.value })}
         error={!usernameState.isValid}
       />
@@ -88,7 +94,6 @@ export function Register() {
         label="Password"
         type="password"
         variant="outlined"
-        required
         onChange={(e) => setPasswordState({ ...passwordState, password: e.target.value })}
         onFocus={() => setPasswordState({ ...passwordState, showHelperText: true })}
         error={!passwordState.isValid}
@@ -107,7 +112,6 @@ export function Register() {
         id="email-signup"
         label="Email"
         variant="outlined"
-        required
         onChange={(e) => setEmail(e.target.value)}
       />
       <TextField
@@ -115,7 +119,6 @@ export function Register() {
         id="firstname-signup"
         label="First name"
         variant="outlined"
-        required
         onChange={(e) => setFirstname(e.target.value)}
       />
       <TextField
@@ -123,7 +126,6 @@ export function Register() {
         id="surname-signup"
         label="Surname"
         variant="outlined"
-        required
         onChange={(e) => setSurname(e.target.value)}
       />
       <RadioGroup
