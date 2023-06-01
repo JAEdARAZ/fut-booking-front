@@ -2,7 +2,6 @@
 import { Container } from "@mui/system";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Footer } from "./components/Footer";
 import Profile from "./components/Profile";
 import ForgotPasswordStepper from "./components/access/ForgotPasswordStepper";
 import { Login } from "./components/access/Login";
@@ -23,7 +22,7 @@ function App() {
           <Route path="/games/:gameId" element={<GameDetail />} />
         </Routes>
       </Container>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

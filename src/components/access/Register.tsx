@@ -16,41 +16,47 @@ export function Register() {
   const [surname, setSurname] = useState<string>("");
   const [gender, setGender] = useState<string>("");
 
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>("");
   const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') return;
     setShowAlert(false);
   };
 
   async function register(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\s])(?=.*\d)[A-Za-z\d^$.[\]{}()?"!@#%&/,><':;|_~`+=\\-]{8,}$/
-    if (regexPassword.test(passwordState.password)) {
-      setPasswordState({ ...passwordState, isValid: true })
-      try {
-        await registerNewUser({
-          username: usernameState.username,
-          password: passwordState.password,
-          email,
-          name: firstname,
-          surname: surname,
-          gender,
-          birthdate: "10/08/2000"
-        });
-        console.log("created user");
-      } catch (error: any) {
-        const code = error?.code;
-        if (code === ErrorType.USERNAME_EXISTS.code) {
-          console.log(ErrorType.USERNAME_EXISTS.message);
+    setUsernameState({ ...usernameState, isValid: true });
+    setPasswordState({ ...passwordState, isValid: true });
+    try {
+      await registerNewUser({
+        username: usernameState.username,
+        password: passwordState.password,
+        email,
+        name: firstname,
+        surname: surname,
+        gender,
+        birthdate: "10/08/2000"
+      });
+      console.log("created user");
+    } catch (error: any) {
+      const code = error?.code;
+      console.log(code);
+      switch (code) {
+        case ErrorType.USERNAME_EXISTS.code:
           setUsernameState({ ...usernameState, isValid: false });
+          setAlertMessage(ErrorType.USERNAME_EXISTS.message);
           setShowAlert(true);
-        } else {
-          console.log(error);
-        }
+          break;
+        case ErrorType.INVALID_PASSWORD.code:
+          setPasswordState({ ...passwordState, isValid: false })
+          setAlertMessage(ErrorType.INVALID_PASSWORD.message);
+          setShowAlert(true);
+          break;
+        default:
+          setUsernameState({ ...usernameState, isValid: true });
+          setAlertMessage(ErrorType.INPUT_ERROR.message);
+          setShowAlert(true);
+          break;
       }
-    } else {
-      setUsernameState({ ...usernameState, isValid: true });
-      setPasswordState({ ...passwordState, isValid: false })
     }
   }
 
@@ -140,9 +146,9 @@ export function Register() {
       </Button>
       <Snackbar
         open={showAlert}
-        autoHideDuration={8000}
-        sx={{ height: "250px" }}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        autoHideDuration={10000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        sx={{ mb: "110px" }}
         onClose={handleCloseAlert}
       >
         <Alert
@@ -150,7 +156,7 @@ export function Register() {
           severity="error"
           sx={{ width: "100%" }}
         >
-          {ErrorType.USERNAME_EXISTS.message}
+          {alertMessage}
         </Alert>
       </Snackbar>
     </Box>
